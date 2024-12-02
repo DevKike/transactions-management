@@ -19,8 +19,8 @@ export class UserRouter implements IRouterModule {
   initRoutes(): void {
     this._userRouter.post('/', async (req, res) => {
       try {
-        await this._registerUseCase.execute(req.body);
-        res.status(201).json({ message: 'User created successfully' });
+        const user = await this._registerUseCase.execute(req.body);
+        res.status(201).json({ message: 'User created successfully', createdUser: user });
       } catch (error) {
         res.status(500).json({ message: 'Internal server error:', error });
       }
