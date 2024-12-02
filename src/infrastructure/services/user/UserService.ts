@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { ICreateUser } from '../../../domain/interfaces/user/IUser';
+import { ICreateUser, IUser } from '../../../domain/interfaces/user/IUser';
 import { IUserService } from '../../../domain/interfaces/user/IUserService';
 import { TYPES } from '../../inversify/types/types';
 import { IUserRepository } from '../../../domain/interfaces/user/IUserRepository';
@@ -10,9 +10,9 @@ export class UserService implements IUserService {
     @inject(TYPES.UserRepository)
     private readonly _userRepository: IUserRepository
   ) {}
-  create(userData: ICreateUser): Promise<ICreateUser> {
+  async create(userData: ICreateUser): Promise<IUser> {
     try {
-      return this._userRepository.create(userData);
+      return await this._userRepository.create(userData);
     } catch (error) {
       throw error;
     }

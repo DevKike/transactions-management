@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { ICreateUser } from '../../../domain/interfaces/user/IUser';
+import { ICreateUser, IUser } from '../../../domain/interfaces/user/IUser';
 import { IUserRepository } from '../../../domain/interfaces/user/IUserRepository';
 import { DataSource, Repository } from 'typeorm';
 import { User } from '../../database/entities/User';
@@ -14,7 +14,7 @@ export class UserRepository implements IUserRepository {
     this._userRepository = _appDataSource.getRepository(User);
   }
 
-  async create(userData: ICreateUser): Promise<ICreateUser> {
+  async create(userData: ICreateUser): Promise<IUser> {
     return await this._userRepository.save(userData);
   }
 }

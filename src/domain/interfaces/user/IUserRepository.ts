@@ -1,5 +1,5 @@
-import { ICreateUser } from './IUser';
+import { ICreateUser, IUser } from './IUser';
 
 export interface IUserRepository {
-  create(user: ICreateUser): Promise<ICreateUser>;
+  create(user: ICreateUser): Promise<IUser>;
 }
