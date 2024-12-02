@@ -3,6 +3,7 @@ import { ICreateUser, IUser } from '../../../domain/interfaces/user/IUser';
 import { IUserService } from '../../../domain/interfaces/user/IUserService';
 import { TYPES } from '../../inversify/types/types';
 import { IUserRepository } from '../../../domain/interfaces/user/IUserRepository';
+import { hash } from '../../utils/bcrypt';
 
 @injectable()
 export class UserService implements IUserService {
@@ -12,7 +13,11 @@ export class UserService implements IUserService {
   ) {}
   async create(userData: ICreateUser): Promise<IUser> {
     try {
-      return await this._userRepository.create(userData);
+      const newUserData: ICreateUser = {
+        ...userData,
+        password: await hash(userData.password),
+      };
+      return await this._userRepository.create(newUserData);
     } catch (error) {
       throw error;
     }
