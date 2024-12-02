@@ -1,14 +1,21 @@
 import express, { Application as App } from 'express';
 import { environment } from '../environments/environment';
-import { AppDataSource } from '../typeorm/config/config';
+import { AppDataSource } from '../database/config/typeorm.config';
+import { IRouterManager } from './interfaces/IRouterManager';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../inversify/types/types';
 
+@injectable()
 export class Application {
   public _app: App;
   private readonly _PORT = environment.PORT;
 
-  constructor() {
+  constructor(
+    @inject(TYPES.RouterManager) private readonly _routerManager: IRouterManager
+  ) {
     this._app = express();
     this.initMiddlewares();
+    this.initRoutes();
   }
 
   public initServer(): void {
@@ -26,5 +33,9 @@ export class Application {
 
   private initMiddlewares(): void {
     this._app.use(express.json());
+  }
+
+  private initRoutes(): void {
+    this._routerManager.manageRoutes(this._app);
   }
 }
