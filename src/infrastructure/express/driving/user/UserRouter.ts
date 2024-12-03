@@ -3,6 +3,9 @@ import { Router } from 'express';
 import { TYPES } from '../../../inversify/types/types';
 import { RegisterUseCase } from '../../../../application/usecases/user/RegisterUseCase';
 import { IRouterModule } from '../../interfaces/IRouterModule';
+import { ResponseModel } from '../../response/ResponseModel';
+import { HttpStatusCode } from '../../../../domain/enums/HttpStatusCode';
+import { Message } from '../../../../domain/enums/Message';
 
 @injectable()
 export class UserRouter implements IRouterModule {
@@ -18,12 +21,12 @@ export class UserRouter implements IRouterModule {
 
   initRoutes(): void {
     this._userRouter.post('/', async (req, res) => {
-      try {
-        const user = await this._registerUseCase.execute(req.body);
-        res.status(201).json({ message: 'User created successfully', createdUser: user });
-      } catch (error) {
-        res.status(500).json({ message: 'Internal server error:', error });
-      }
+      await ResponseModel.manageResponse(
+        this._registerUseCase.execute(req.body),
+        res,
+        HttpStatusCode.CREATED,
+        Message.CREATED
+      );
     });
   }
 

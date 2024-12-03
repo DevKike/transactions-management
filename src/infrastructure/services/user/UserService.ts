@@ -4,6 +4,7 @@ import { IUserService } from '../../../domain/interfaces/user/IUserService';
 import { TYPES } from '../../inversify/types/types';
 import { IUserRepository } from '../../../domain/interfaces/user/IUserRepository';
 import { hash } from '../../utils/bcrypt';
+import { AlreadyExistException } from '../../../domain/exceptions/AlreadyExistsException';
 
 @injectable()
 export class UserService implements IUserService {
@@ -25,6 +26,9 @@ export class UserService implements IUserService {
 
       return userCopy;
     } catch (error) {
+        if (error instanceof Error && (error as any).code === 'ER_DUP_ENTRY') {
+          throw new AlreadyExistException('User already exists');          
+        }
       throw error;
     }
   }
