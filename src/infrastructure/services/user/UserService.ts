@@ -17,7 +17,13 @@ export class UserService implements IUserService {
         ...userData,
         password: await hash(userData.password),
       };
-      return await this._userRepository.create(newUserData);
+
+      const user = await this._userRepository.create(newUserData);
+      const userCopy = { ...user } as any;
+
+      delete userCopy.password;
+
+      return userCopy;
     } catch (error) {
       throw error;
     }
