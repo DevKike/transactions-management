@@ -9,4 +9,7 @@ export const TYPES = {
   UserService: Symbol.for('UserService'),
   RegisterUseCase: Symbol.for('RegisterUseCase'),
   UserRouter: Symbol.for('UserRouter'),
+
+  AuthService: Symbol.for('AuthService'),
+  LoginUseCase: Symbol.for('LoginUseCase'),
 };

@@ -17,4 +17,8 @@ export class UserRepository implements IUserRepository {
   async create(userData: ICreateUser): Promise<IUser> {
     return await this._userRepository.save(userData);
   }
+
+  async findByEmail(email: ICreateUser['email']): Promise<IUser | null> {
+    return await this._userRepository.findOneBy({ email: email });
+  }
 }

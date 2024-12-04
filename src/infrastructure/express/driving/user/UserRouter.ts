@@ -6,6 +6,7 @@ import { ResponseModel } from '../../response/ResponseModel';
 import { HttpStatusCode } from '../../../../domain/enums/HttpStatusCode';
 import { Message } from '../../../../domain/enums/Message';
 import { IRegisterUseCase } from '../../../../domain/interfaces/user/usecases/IRegisterUseCase';
+import { ILoginUseCase } from '../../../../domain/interfaces/user/usecases/ILoginUseCase';
 
 @injectable()
 export class UserRouter implements IRouterModule {
@@ -13,7 +14,9 @@ export class UserRouter implements IRouterModule {
 
   constructor(
     @inject(TYPES.RegisterUseCase)
-    private readonly _registerUseCase: IRegisterUseCase
+    private readonly _registerUseCase: IRegisterUseCase,
+    @inject(TYPES.LoginUseCase)
+    private readonly _loginUseCase: ILoginUseCase
   ) {
     this._userRouter = Router();
     this.initRoutes();
@@ -26,6 +29,13 @@ export class UserRouter implements IRouterModule {
         res,
         HttpStatusCode.CREATED,
         Message.CREATED
+      );
+    });
+
+    this._userRouter.post('/login', async (req, res) => {
+      await ResponseModel.manageResponse(
+        this._loginUseCase.execute(req.body),
+        res
       );
     });
   }

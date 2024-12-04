@@ -7,4 +7,4 @@ export interface IUser {
 
 export interface ICreateUser extends Omit<IUser, 'id'> {}
 
-export interface IAuthUser extends Pick<IUser, 'email' | 'password'> {}
+export interface IAuthCredentials extends Pick<IUser, 'email' | 'password'> {}

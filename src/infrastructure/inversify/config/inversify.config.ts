@@ -11,6 +11,9 @@ import { IRouterManager } from '../../express/interfaces/IRouterManager';
 import { RouterManager } from '../../express/driving/RouterManager';
 import { IRouterModule } from '../../express/interfaces/IRouterModule';
 import { UserRouter } from '../../express/driving/user/UserRouter';
+import { IJwtService } from '../../jwt/interfaces/IJwtService';
+import { AuthService } from '../../services/auth/AuthService';
+import { LoginUseCase } from '../../../application/usecases/user/LoginUseCase';
 
 const container = new Container();
 
@@ -25,6 +28,12 @@ container.bind<IUserService>(TYPES.UserService).to(UserService);
 container.bind(TYPES.RegisterUseCase).toDynamicValue((context) => {
   const userService = context.container.get<IUserService>(TYPES.UserService);
   return new RegisterUseCase(userService);
+});
+
+container.bind<IJwtService>(TYPES.AuthService).to(AuthService);
+container.bind(TYPES.LoginUseCase).toDynamicValue((context) => {
+  const userService = context.container.get<IUserService>(TYPES.UserService);
+  return new LoginUseCase(userService); 
 });
 
 export { container };
