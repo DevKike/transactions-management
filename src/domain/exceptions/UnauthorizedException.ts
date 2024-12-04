@@ -1,6 +1,9 @@
-export class UnauthorizedException extends Error {
+import { HttpStatusCode } from '../enums/HttpStatusCode';
+import { BaseException } from './BaseException';
+
+export class UnauthorizedException extends BaseException {
   constructor(message: string) {
-    super(message);
+    super(message, HttpStatusCode.UNAUTHORIZED);
     this.name = 'UnauthorizedException';
   }
 }

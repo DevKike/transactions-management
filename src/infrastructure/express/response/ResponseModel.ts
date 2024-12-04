@@ -1,7 +1,7 @@
-import e, { Response } from 'express';
+import { Response } from 'express';
 import { HttpStatusCode } from '../../../domain/enums/HttpStatusCode';
 import { Message } from '../../../domain/enums/Message';
-import { AlreadyExistException } from '../../../domain/exceptions/AlreadyExistsException';
+import { BaseException } from '../../../domain/exceptions/BaseException';
 
 export class ResponseModel {
   static async manageResponse(
@@ -27,9 +27,9 @@ export class ResponseModel {
       message: Message.INTERNAL_SERVER_ERROR,
     };
 
-    if (error instanceof AlreadyExistException) {
+    if (error instanceof BaseException) {
       errorResponse.message = error.message as Message;
-      return res.status(HttpStatusCode.CONFLICT).json({ ...errorResponse });
+      return res.status(error.statusCode).json({ ...errorResponse });
     }
 
     return res

@@ -1,6 +1,9 @@
-export class AlreadyExistException extends Error {
+import { HttpStatusCode } from '../enums/HttpStatusCode';
+import { BaseException } from './BaseException';
+
+export class AlreadyExistException extends BaseException {
   constructor(message: string) {
-    super(message);
+    super(message, HttpStatusCode.CONFLICT);
     this.name = 'AlreadyExistException';
   }
 }
