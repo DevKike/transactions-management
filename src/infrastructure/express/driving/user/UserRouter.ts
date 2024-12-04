@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify';
 import { Router } from 'express';
 import { TYPES } from '../../../inversify/types/types';
-import { RegisterUseCase } from '../../../../application/usecases/user/RegisterUseCase';
 import { IRouterModule } from '../../interfaces/IRouterModule';
 import { ResponseModel } from '../../response/ResponseModel';
 import { HttpStatusCode } from '../../../../domain/enums/HttpStatusCode';
 import { Message } from '../../../../domain/enums/Message';
+import { IRegisterUseCase } from '../../../../domain/interfaces/user/usecases/IRegisterUseCase';
 
 @injectable()
 export class UserRouter implements IRouterModule {
@@ -13,7 +13,7 @@ export class UserRouter implements IRouterModule {
 
   constructor(
     @inject(TYPES.RegisterUseCase)
-    private readonly _registerUseCase: RegisterUseCase
+    private readonly _registerUseCase: IRegisterUseCase
   ) {
     this._userRouter = Router();
     this.initRoutes();
