@@ -5,11 +5,12 @@ export const TYPES = {
   RouterManager: Symbol.for('RouterManager'),
   RouterModule: Symbol.for('RouterModule'),
 
+  AuthService: Symbol.for('AuthService'),
+
   UserRepository: Symbol.for('UserRepository'),
   UserService: Symbol.for('UserService'),
   RegisterUseCase: Symbol.for('RegisterUseCase'),
-  UserRouter: Symbol.for('UserRouter'),
-
-  AuthService: Symbol.for('AuthService'),
   LoginUseCase: Symbol.for('LoginUseCase'),
+  GetUserDataByIdUseCase: Symbol.for('GetUserDataByIdUseCase'),
+  UserRouter: Symbol.for('UserRouter'),
 };

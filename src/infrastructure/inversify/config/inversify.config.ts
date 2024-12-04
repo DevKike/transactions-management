@@ -14,6 +14,7 @@ import { UserRouter } from '../../express/driving/user/UserRouter';
 import { IJwtService } from '../../jwt/interfaces/IJwtService';
 import { AuthService } from '../../services/auth/AuthService';
 import { LoginUseCase } from '../../../application/usecases/user/LoginUseCase';
+import { GetUserDataById } from '../../../application/usecases/user/GetUserDataByIdUseCase';
 
 const container = new Container();
 
@@ -33,7 +34,12 @@ container.bind(TYPES.RegisterUseCase).toDynamicValue((context) => {
 container.bind<IJwtService>(TYPES.AuthService).to(AuthService);
 container.bind(TYPES.LoginUseCase).toDynamicValue((context) => {
   const userService = context.container.get<IUserService>(TYPES.UserService);
-  return new LoginUseCase(userService); 
+  return new LoginUseCase(userService);
+});
+
+container.bind(TYPES.GetUserDataByIdUseCase).toDynamicValue((context) => {
+  const userService = context.container.get<IUserService>(TYPES.UserService);
+  return new GetUserDataById(userService);
 });
 
 export { container };

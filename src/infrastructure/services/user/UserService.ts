@@ -22,6 +22,7 @@ export class UserService implements IUserService {
     @inject(TYPES.AuthService)
     private readonly _authService: IJwtService
   ) {}
+
   async create(userData: ICreateUser): Promise<IUser> {
     try {
       const newUserData: ICreateUser = {
@@ -61,6 +62,20 @@ export class UserService implements IUserService {
       }
 
       return this.generateToken(user);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getDataById(id: IUser['id']): Promise<IUser | null> {
+    try {
+      const userData = await this._userRepository.findById(id);
+
+      const userDataCopy = { ...userData };
+
+      delete userDataCopy.password;
+
+      return userDataCopy as IUser;
     } catch (error) {
       throw error;
     }

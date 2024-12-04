@@ -9,6 +9,7 @@ import { IRegisterUseCase } from '../../../../domain/interfaces/user/usecases/IR
 import { ILoginUseCase } from '../../../../domain/interfaces/user/usecases/ILoginUseCase';
 import { IRequest } from '../../interfaces/IRequest';
 import { authMiddleware } from '../../middlewares/authMiddleware';
+import { IGetUserDataByIdUseCase } from '../../../../domain/interfaces/user/usecases/IGetUserDataByIdUseCase';
 
 @injectable()
 export class UserRouter implements IRouterModule {
@@ -18,7 +19,9 @@ export class UserRouter implements IRouterModule {
     @inject(TYPES.RegisterUseCase)
     private readonly _registerUseCase: IRegisterUseCase,
     @inject(TYPES.LoginUseCase)
-    private readonly _loginUseCase: ILoginUseCase
+    private readonly _loginUseCase: ILoginUseCase,
+    @inject(TYPES.GetUserDataByIdUseCase)
+    private readonly _getUserDataByIdUseCase: IGetUserDataByIdUseCase
   ) {
     this._userRouter = Router();
     this.initRoutes();
@@ -40,6 +43,17 @@ export class UserRouter implements IRouterModule {
         res
       );
     });
+
+    this._userRouter.get(
+      '/',
+      authMiddleware(),
+      async (req: IRequest, res: Response) => {
+        await ResponseModel.manageResponse(
+          this._getUserDataByIdUseCase.execute(req.user?.id!),
+          res
+        );
+      }
+    );
   }
 
   getRouter(): Router {

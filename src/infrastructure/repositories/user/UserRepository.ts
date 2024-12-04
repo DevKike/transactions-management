@@ -21,4 +21,8 @@ export class UserRepository implements IUserRepository {
   async findByEmail(email: ICreateUser['email']): Promise<IUser | null> {
     return await this._userRepository.findOneBy({ email: email });
   }
+
+  async findById(id: IUser['id']): Promise<IUser | null> {
+    return await this._userRepository.findOneBy({ id: id });
+  }
 }
