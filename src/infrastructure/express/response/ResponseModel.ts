@@ -22,7 +22,7 @@ export class ResponseModel {
     }
   }
 
-  private static handleError(error: unknown, res: Response) {
+  public static handleError(error: unknown, res: Response) {
     const errorResponse = {
       message: Message.INTERNAL_SERVER_ERROR,
     };
