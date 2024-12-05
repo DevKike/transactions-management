@@ -13,7 +13,7 @@ export class CreditCard implements ICreditCard {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'card_number', type: 'varchar', length: 16 })
+  @Column({ name: 'card_number', type: 'varchar', length: 16, unique: true })
   cardNumber: string;
 
   @Column({ name: 'credit_limit', type: 'decimal', precision: 10, scale: 2 })
