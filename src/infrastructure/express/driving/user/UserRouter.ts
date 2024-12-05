@@ -10,6 +10,8 @@ import { ILoginUseCase } from '../../../../domain/interfaces/user/usecases/ILogi
 import { IRequest } from '../../interfaces/IRequest';
 import { authMiddleware } from '../../middlewares/authMiddleware';
 import { IGetUserDataByIdUseCase } from '../../../../domain/interfaces/user/usecases/IGetUserDataByIdUseCase';
+import { classValidatorMiddleware } from '../../middlewares/classValidatorMiddleware';
+import { UserDTO } from '../../../validator/user/UserDTO';
 
 @injectable()
 export class UserRouter implements IRouterModule {
@@ -28,14 +30,18 @@ export class UserRouter implements IRouterModule {
   }
 
   initRoutes(): void {
-    this._userRouter.post('/', async (req: IRequest, res: Response) => {
-      await ResponseModel.manageResponse(
-        this._registerUseCase.execute(req.body),
-        res,
-        HttpStatusCode.CREATED,
-        Message.CREATED
-      );
-    });
+    this._userRouter.post(
+      '/',
+      classValidatorMiddleware(UserDTO),
+      async (req: IRequest, res: Response) => {
+        await ResponseModel.manageResponse(
+          this._registerUseCase.execute(req.body),
+          res,
+          HttpStatusCode.CREATED,
+          Message.CREATED
+        );
+      }
+    );
 
     this._userRouter.post('/login', async (req: IRequest, res: Response) => {
       await ResponseModel.manageResponse(
