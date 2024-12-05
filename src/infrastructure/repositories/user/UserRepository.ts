@@ -14,7 +14,7 @@ export class UserRepository implements IUserRepository {
     this._userRepository = _appDataSource.getRepository(User);
   }
 
-  async create(userData: ICreateUser): Promise<IUser> {
+  async save(userData: ICreateUser): Promise<IUser> {
     return await this._userRepository.save(userData);
   }
 

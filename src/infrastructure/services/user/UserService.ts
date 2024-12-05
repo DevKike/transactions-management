@@ -30,7 +30,7 @@ export class UserService implements IUserService {
         password: await hash(userData.password),
       };
 
-      const user = await this._userRepository.create(newUserData);
+      const user = await this._userRepository.save(newUserData);
       const userCopy = { ...user } as any;
 
       delete userCopy.password;
