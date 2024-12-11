@@ -10,7 +10,7 @@ import { IRequest } from '../../interfaces/IRequest';
 import { authMiddleware } from '../../middlewares/authMiddleware';
 import { classValidatorMiddleware } from '../../middlewares/classValidatorMiddleware';
 import { CreditCardDTO } from '../../../validator/creditCard/CreditCardDTO';
-import { ICheckCreditCardBalance } from '../../../../domain/interfaces/creditCard/usecases/ICheckCardBalance';
+import { ICheckCreditCardBalance } from '../../../../domain/interfaces/creditCard/usecases/ICheckCreditCardBalance';
 
 @injectable()
 export class CreditCardRouter implements IRouterModule {

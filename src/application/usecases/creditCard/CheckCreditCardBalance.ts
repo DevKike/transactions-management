@@ -1,4 +1,4 @@
-import { ICheckCreditCardBalance } from '../../../domain/interfaces/creditCard/usecases/ICheckCardBalance';
+import { ICheckCreditCardBalance } from '../../../domain/interfaces/creditCard/usecases/ICheckCreditCardBalance';
 import { ICreditCard } from '../../../domain/interfaces/creditCard/ICreditCard';
 import { ICreditCardService } from '../../../domain/interfaces/creditCard/ICreditCardService';
 

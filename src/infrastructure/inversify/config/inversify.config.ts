@@ -24,7 +24,7 @@ import { ILoginUseCase } from '../../../domain/interfaces/user/usecases/ILoginUs
 import { IGetUserDataByIdUseCase } from '../../../domain/interfaces/user/usecases/IGetUserDataByIdUseCase';
 import { CreateOwnCreditCard } from '../../../application/usecases/creditCard/CreateOwnCreditCard';
 import { CreditCardRouter } from '../../express/driving/creditCard/CreditCardRouter';
-import { ICheckCreditCardBalance } from '../../../domain/interfaces/creditCard/usecases/ICheckCardBalance';
+import { ICheckCreditCardBalance } from '../../../domain/interfaces/creditCard/usecases/ICheckCreditCardBalance';
 import { CheckCreditCardBalance } from '../../../application/usecases/creditCard/CheckCreditCardBalance';
 
 const container = new Container();
