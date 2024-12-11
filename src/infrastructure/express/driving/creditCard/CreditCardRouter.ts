@@ -12,6 +12,7 @@ import { classValidatorMiddleware } from '../../middlewares/classValidatorMiddle
 import { CreditCardDTO } from '../../../validator/creditCard/CreditCardDTO';
 import { ICheckCreditCardBalance } from '../../../../domain/interfaces/creditCard/usecases/ICheckCreditCardBalance';
 import { IGetAllCreditCards } from '../../../../domain/interfaces/creditCard/usecases/IGetAllCreditCards';
+import { IGetUserCreditCards } from '../../../../domain/interfaces/creditCard/usecases/IGetUserCreditCards';
 
 @injectable()
 export class CreditCardRouter implements IRouterModule {
@@ -22,6 +23,8 @@ export class CreditCardRouter implements IRouterModule {
     private readonly _createOwnCreditCardUseCase: ICreateOwnCreditCard,
     @inject(TYPES.GetAllCreditCards)
     private readonly _getAllCreditCards: IGetAllCreditCards,
+    @inject(TYPES.GetUserCreditCards)
+    private readonly _getUserCreditCards: IGetUserCreditCards,
     @inject(TYPES.CheckCreditCardBalance)
     private readonly _checkCreditCardBalance: ICheckCreditCardBalance
   ) {
@@ -53,7 +56,19 @@ export class CreditCardRouter implements IRouterModule {
     });
 
     this._creditCardRouter.get(
+      '/user/all',
+      authMiddleware(),
+      async (req: IRequest, res: Response) => {
+        await ResponseModel.manageResponse(
+          this._getUserCreditCards.execute(Number(req.user?.id)),
+          res
+        );
+      }
+    );
+
+    this._creditCardRouter.get(
       '/:id/balance',
+      authMiddleware(),
       async (req: IRequest, res: Response) => {
         await ResponseModel.manageResponse(
           this._checkCreditCardBalance.execute(Number(req.params.id)),

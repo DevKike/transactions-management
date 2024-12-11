@@ -8,6 +8,7 @@ import { ICreditCardRepository } from '../../../domain/interfaces/creditCard/ICr
 import { TYPES } from '../../inversify/types/types';
 import { NotFoundException } from '../../../domain/exceptions/NotFoundException';
 import { AlreadyExistException } from '../../../domain/exceptions/AlreadyExistsException';
+import { IUser } from '../../../domain/interfaces/user/IUser';
 
 @injectable()
 export class CreditCardService implements ICreditCardService {
@@ -35,9 +36,21 @@ export class CreditCardService implements ICreditCardService {
     }
   }
 
-  async checkBalance(creditCardId: ICreditCard['id']): Promise<ICreditCard['balance']> {
+  async getAllByUserId(userId: IUser['id']): Promise<ICreditCard[]> {
     try {
-      const creditCard = await this._creditCardRepository.findById(creditCardId);
+      return await this._creditCardRepository.findAllByUserId(userId);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async checkBalance(
+    creditCardId: ICreditCard['id']
+  ): Promise<ICreditCard['balance']> {
+    try {
+      const creditCard = await this._creditCardRepository.findById(
+        creditCardId
+      );
 
       if (!creditCard) {
         throw new NotFoundException('Credit card not found');

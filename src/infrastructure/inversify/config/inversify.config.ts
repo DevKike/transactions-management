@@ -28,6 +28,8 @@ import { ICheckCreditCardBalance } from '../../../domain/interfaces/creditCard/u
 import { CheckCreditCardBalance } from '../../../application/usecases/creditCard/CheckCreditCardBalance';
 import { IGetAllCreditCards } from '../../../domain/interfaces/creditCard/usecases/IGetAllCreditCards';
 import { GetAllCreditCards } from '../../../application/usecases/creditCard/GetAllCreditCards';
+import { IGetUserCreditCards } from '../../../domain/interfaces/creditCard/usecases/IGetUserCreditCards';
+import { GetUserCreditCards } from '../../../application/usecases/creditCard/GetUserCreditCards';
 
 const container = new Container();
 
@@ -76,6 +78,14 @@ container
       TYPES.CreditCardService
     );
     return new GetAllCreditCards(creditCardService);
+  });
+container
+  .bind<IGetUserCreditCards>(TYPES.GetUserCreditCards)
+  .toDynamicValue((context) => {
+    const creditCardService = context.container.get<ICreditCardService>(
+      TYPES.CreditCardService
+    );
+    return new GetUserCreditCards(creditCardService);
   });
 container
   .bind<ICheckCreditCardBalance>(TYPES.CheckCreditCardBalance)

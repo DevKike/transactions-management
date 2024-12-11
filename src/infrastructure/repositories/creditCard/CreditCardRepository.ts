@@ -7,6 +7,7 @@ import { ICreditCardRepository } from '../../../domain/interfaces/creditCard/ICr
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../inversify/types/types';
 import { CreditCard } from '../../database/entities/CreditCard';
+import { IUser } from '../../../domain/interfaces/user/IUser';
 
 @injectable()
 export class CreditCardRepository implements ICreditCardRepository {
@@ -24,6 +25,12 @@ export class CreditCardRepository implements ICreditCardRepository {
 
   async findAll(): Promise<ICreditCard[]> {
     return await this._creditCardRepository.find();
+  }
+
+  async findAllByUserId(userId: IUser['id']): Promise<ICreditCard[]> {
+    return await this._creditCardRepository.find({
+      where: { user: { id: userId } },
+    });
   }
 
   async findById(creditCardId: ICreditCard['id']): Promise<ICreditCard | null> {
