@@ -60,7 +60,7 @@ export class CreditCardRouter implements IRouterModule {
       authMiddleware(),
       async (req: IRequest, res: Response) => {
         await ResponseModel.manageResponse(
-          this._getUserCreditCards.execute(Number(req.user?.id)),
+          this._getUserCreditCards.execute(req.user!.id),
           res
         );
       }
@@ -71,7 +71,10 @@ export class CreditCardRouter implements IRouterModule {
       authMiddleware(),
       async (req: IRequest, res: Response) => {
         await ResponseModel.manageResponse(
-          this._checkCreditCardBalance.execute(Number(req.params.id)),
+          this._checkCreditCardBalance.execute(
+            Number(req.params.id),
+            req.user!.id
+          ),
           res
         );
       }
