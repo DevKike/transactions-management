@@ -7,6 +7,7 @@ import { ICreditCardService } from '../../../domain/interfaces/creditCard/ICredi
 import { ICreditCardRepository } from '../../../domain/interfaces/creditCard/ICreditCardRepository';
 import { TYPES } from '../../inversify/types/types';
 import { NotFoundException } from '../../../domain/exceptions/NotFoundException';
+import { AlreadyExistException } from '../../../domain/exceptions/AlreadyExistsException';
 
 @injectable()
 export class CreditCardService implements ICreditCardService {
@@ -18,7 +19,10 @@ export class CreditCardService implements ICreditCardService {
   async create(creditCard: ICreateCreditCard): Promise<ICreditCard> {
     try {
       return await this._creditCardRepository.save(creditCard);
-    } catch (error) {
+    } catch (error: any) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new AlreadyExistException('Credit card already exists');
+      }
       throw error;
     }
   }
