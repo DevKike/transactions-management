@@ -24,6 +24,8 @@ import { ILoginUseCase } from '../../../domain/interfaces/user/usecases/ILoginUs
 import { IGetUserDataByIdUseCase } from '../../../domain/interfaces/user/usecases/IGetUserDataByIdUseCase';
 import { CreateOwnCreditCard } from '../../../application/usecases/creditCard/CreateOwnCreditCard';
 import { CreditCardRouter } from '../../express/driving/creditCard/CreditCardRouter';
+import { ICheckCreditCardBalance } from '../../../domain/interfaces/creditCard/usecases/ICheckCardBalance';
+import { CheckCreditCardBalance } from '../../../application/usecases/creditCard/CheckCreditCardBalance';
 
 const container = new Container();
 
@@ -64,6 +66,14 @@ container
       TYPES.CreditCardService
     );
     return new CreateOwnCreditCard(creditCardService);
+  });
+container
+  .bind<ICheckCreditCardBalance>(TYPES.CheckCreditCardBalance)
+  .toDynamicValue((context) => {
+    const creditCardService = context.container.get<ICreditCardService>(
+      TYPES.CreditCardService
+    );
+    return new CheckCreditCardBalance(creditCardService);
   });
 container.bind<IRouterModule>(TYPES.CreditCardRouter).to(CreditCardRouter);
 export { container };

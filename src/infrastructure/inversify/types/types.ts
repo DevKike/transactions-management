@@ -17,5 +17,6 @@ export const TYPES = {
   CreditCardRepository: Symbol.for('CreditCardRepository'),
   CreditCardService: Symbol.for('CreditCardService'),
   CreateOwnCreditCardUseCase: Symbol.for('CreditCardUseCase'),
+  CheckCreditCardBalance: Symbol.for('CheckCreditCardBalance'),
   CreditCardRouter: Symbol.for('CreditCardRouter'),
 };
