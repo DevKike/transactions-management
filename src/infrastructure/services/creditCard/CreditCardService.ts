@@ -27,11 +27,17 @@ export class CreditCardService implements ICreditCardService {
     }
   }
 
-  async checkBalance(
-    creditCardId: ICreditCard['id']
-  ): Promise<ICreditCard['balance']> {
+  async getAll(): Promise<ICreditCard[]> {
     try {
-      const creditCard = await this._creditCardRepository.get(creditCardId);
+      return await this._creditCardRepository.findAll();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async checkBalance(creditCardId: ICreditCard['id']): Promise<ICreditCard['balance']> {
+    try {
+      const creditCard = await this._creditCardRepository.findById(creditCardId);
 
       if (!creditCard) {
         throw new NotFoundException('Credit card not found');

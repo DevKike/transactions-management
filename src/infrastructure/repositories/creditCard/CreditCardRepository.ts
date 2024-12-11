@@ -22,7 +22,11 @@ export class CreditCardRepository implements ICreditCardRepository {
     return await this._creditCardRepository.save(creditCard);
   }
 
-  async get(creditCardId: ICreditCard['id']): Promise<ICreditCard | null> {
+  async findAll(): Promise<ICreditCard[]> {
+    return await this._creditCardRepository.find();
+  }
+
+  async findById(creditCardId: ICreditCard['id']): Promise<ICreditCard | null> {
     return await this._creditCardRepository.findOne({
       where: { id: creditCardId },
     });
