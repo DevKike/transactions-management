@@ -1,6 +1,7 @@
 import { validate } from 'class-validator';
 import { Request, Response, NextFunction } from 'express';
 import { HttpStatusCode } from '../../../domain/enums/HttpStatusCode';
+import { ResponseModel } from '../response/ResponseModel';
 
 export const classValidatorMiddleware = (DtoClass: any) => {
   return async (
@@ -8,17 +9,12 @@ export const classValidatorMiddleware = (DtoClass: any) => {
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-    const dtoInstance = Object.assign(new DtoClass(), req.body);
-
-    const errors = await validate(dtoInstance);
-
-    if (errors.length > 0) {
-      res.status(HttpStatusCode.BAD_REQUEST).json({
-        message: 'Validation failed',
-        error: errors,
-      });
-    } else {
+    try {
+      const dtoInstance = Object.assign(new DtoClass(), req.body);
+      await validate(dtoInstance);
       next();
+    } catch (error) {
+      ResponseModel.handleError(error, res);
     }
   };
 };
