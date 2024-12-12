@@ -1,9 +1,4 @@
-import {
-  Column,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IUser } from '../../../domain/interfaces/user/IUser';
 import { CreditCard } from './CreditCard';
 
@@ -18,7 +13,7 @@ export class User implements IUser {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @OneToMany(() => CreditCard, (creditCard) => creditCard.user)

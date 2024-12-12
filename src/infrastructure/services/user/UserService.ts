@@ -25,19 +25,19 @@ export class UserService implements IUserService {
 
   async create(userData: ICreateUser): Promise<IUser> {
     try {
-      const newUserData: ICreateUser = {
+      const userWithHashedPassword: ICreateUser = {
         ...userData,
         password: await hash(userData.password),
       };
 
-      const user = await this._userRepository.save(newUserData);
-      const userCopy = { ...user } as any;
+      const savedUser = await this._userRepository.save(userWithHashedPassword);
 
-      delete userCopy.password;
+      const savedUserCopy = { ...(savedUser as any) };
+      delete savedUserCopy.password;
 
-      return userCopy;
-    } catch (error) {
-      if (error instanceof Error && (error as any).code === 'ER_DUP_ENTRY') {
+      return savedUserCopy;
+    } catch (error: any) {
+      if (error.code === 'ER_DUP_ENTRY') {
         throw new AlreadyExistException('User already exists');
       }
       throw error;
@@ -46,7 +46,10 @@ export class UserService implements IUserService {
 
   async authenticate(credentials: IAuthCredentials): Promise<string> {
     try {
-      const user = await this._userRepository.findByEmail(credentials.email);
+      const user = await this._userRepository.findByEmail(
+        credentials.email,
+        true
+      );
 
       if (!user) {
         throw new NotFoundException('User not found');
@@ -69,13 +72,7 @@ export class UserService implements IUserService {
 
   async getDataById(id: IUser['id']): Promise<IUser | null> {
     try {
-      const userData = await this._userRepository.findById(id);
-
-      const userDataCopy = { ...userData };
-
-      delete userDataCopy.password;
-
-      return userDataCopy as IUser;
+      return await this._userRepository.findById(id);
     } catch (error) {
       throw error;
     }

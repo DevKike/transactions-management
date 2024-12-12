@@ -24,18 +24,20 @@ export class CreditCardRepository implements ICreditCardRepository {
   }
 
   async findAll(): Promise<ICreditCard[]> {
-    return await this._creditCardRepository.find();
+    return await this._creditCardRepository.find({ relations: ['user'] });
   }
 
   async findAllByUserId(userId: IUser['id']): Promise<ICreditCard[]> {
     return await this._creditCardRepository.find({
       where: { user: { id: userId } },
+      relations: ['user'],
     });
-  }
+  } 
 
   async findById(creditCardId: ICreditCard['id']): Promise<ICreditCard | null> {
     return await this._creditCardRepository.findOne({
       where: { id: creditCardId },
+      relations: ['user'],
     });
   }
 }
