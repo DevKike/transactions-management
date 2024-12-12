@@ -19,7 +19,7 @@ export class CreditCard implements ICreditCard {
   @Column({ name: 'credit_limit', type: 'decimal', precision: 10, scale: 2 })
   creditLimit: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   balance: number;
 
   @ManyToOne(() => User, (user) => user.creditCards)

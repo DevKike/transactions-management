@@ -9,10 +9,10 @@ import { Message } from '../../../../domain/enums/Message';
 import { IRequest } from '../../interfaces/IRequest';
 import { authMiddleware } from '../../middlewares/authMiddleware';
 import { classValidatorMiddleware } from '../../middlewares/classValidatorMiddleware';
-import { CreditCardDTO } from '../../../validator/creditCard/CreditCardDTO';
 import { ICheckCreditCardBalance } from '../../../../domain/interfaces/creditCard/usecases/ICheckCreditCardBalance';
 import { IGetAllCreditCards } from '../../../../domain/interfaces/creditCard/usecases/IGetAllCreditCards';
 import { IGetUserCreditCards } from '../../../../domain/interfaces/creditCard/usecases/IGetUserCreditCards';
+import { CreditCardRegisterDTO } from '../../../validator/creditCard/CreditCardDTO';
 
 @injectable()
 export class CreditCardRouter implements IRouterModule {
@@ -36,7 +36,7 @@ export class CreditCardRouter implements IRouterModule {
     this._creditCardRouter.post(
       '/',
       authMiddleware(),
-      classValidatorMiddleware(CreditCardDTO),
+      classValidatorMiddleware(CreditCardRegisterDTO),
       async (req: IRequest, res: Response) => {
         const bodyWithUser = { user: req.user?.id, ...req.body };
         await ResponseModel.manageResponse(

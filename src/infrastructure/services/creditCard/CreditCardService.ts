@@ -20,6 +20,7 @@ export class CreditCardService implements ICreditCardService {
 
   async create(creditCard: ICreateCreditCard): Promise<ICreditCard> {
     try {
+      console.log(creditCard);
       return await this._creditCardRepository.save(creditCard);
     } catch (error: any) {
       if (error.code === 'ER_DUP_ENTRY') {

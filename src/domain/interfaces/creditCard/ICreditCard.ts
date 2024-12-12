@@ -8,4 +8,5 @@ export interface ICreditCard {
   user: IUser;
 }
 
-export interface ICreateCreditCard extends Omit<ICreditCard, 'id' | 'cardNumber'> {}
+export interface ICreateCreditCard
+  extends Omit<ICreditCard, 'id' | 'balance' | 'user'> {}
