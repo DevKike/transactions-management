@@ -31,7 +31,7 @@ export class UserRouter implements IRouterModule {
 
   initRoutes(): void {
     this._userRouter.post(
-      '/',
+      '/register',
       classValidatorMiddleware(UserDTO),
       async (req: IRequest, res: Response) => {
         await ResponseModel.manageResponse(
