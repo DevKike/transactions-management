@@ -1,7 +1,7 @@
 import { IsEmail, IsString, Length, MinLength } from 'class-validator';
 import { ICreateUser } from '../../../domain/interfaces/user/IUser';
 
-export class UserDTO implements ICreateUser {
+export class UserRegisterDTO implements ICreateUser {
   @IsString()
   @Length(10, 50)
   name: string;
