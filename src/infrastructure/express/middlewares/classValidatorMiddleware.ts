@@ -1,6 +1,5 @@
 import { validate } from 'class-validator';
 import { Request, Response, NextFunction } from 'express';
-import { HttpStatusCode } from '../../../domain/enums/HttpStatusCode';
 import { ResponseModel } from '../response/ResponseModel';
 
 export const classValidatorMiddleware = (DtoClass: any) => {
