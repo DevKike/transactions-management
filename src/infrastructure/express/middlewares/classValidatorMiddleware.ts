@@ -9,12 +9,13 @@ export const classValidatorMiddleware = (DtoClass: any) => {
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-    try {
-      const dtoInstance = Object.assign(new DtoClass(), req.body);
-      await validate(dtoInstance);
-      next();
-    } catch (error) {
-      ResponseModel.handleError(error, res);
+    const dtoInstance = Object.assign(new DtoClass(), req.body);
+    const errors = await validate(dtoInstance);
+
+    if (errors.length > 0) {
+      ResponseModel.handleError(errors[0], res);
+      return;
     }
+    next();
   };
 };

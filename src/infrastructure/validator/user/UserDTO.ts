@@ -3,7 +3,7 @@ import { ICreateUser } from '../../../domain/interfaces/user/IUser';
 
 export class UserDTO implements ICreateUser {
   @IsString()
-  @Length(10, 30)
+  @Length(10, 50)
   name: string;
 
   @IsEmail()
