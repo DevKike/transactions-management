@@ -14,12 +14,18 @@ export class UserRepository implements IUserRepository {
     this._userRepository = _appDataSource.getRepository(User);
   }
 
-  async create(userData: ICreateUser): Promise<IUser> {
+  async save(userData: ICreateUser): Promise<IUser> {
     return await this._userRepository.save(userData);
   }
 
-  async findByEmail(email: ICreateUser['email']): Promise<IUser | null> {
-    return await this._userRepository.findOneBy({ email: email });
+  async findByEmail(
+    email: ICreateUser['email'],
+    includePassword?: boolean
+  ): Promise<IUser | null> {
+    return await this._userRepository.findOne({
+      where: { email: email },
+      select: { id: true, name: true, email: true, password: includePassword },
+    });
   }
 
   async findById(id: IUser['id']): Promise<IUser | null> {

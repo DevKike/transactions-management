@@ -2,8 +2,8 @@ export const TYPES = {
   DataSource: Symbol.for('DataSource'),
 
   Application: Symbol.for('Application'),
-  RouterManager: Symbol.for('RouterManager'),
   RouterModule: Symbol.for('RouterModule'),
+  RouterManager: Symbol.for('RouterManager'),
 
   AuthService: Symbol.for('AuthService'),
 
@@ -13,4 +13,12 @@ export const TYPES = {
   LoginUseCase: Symbol.for('LoginUseCase'),
   GetUserDataByIdUseCase: Symbol.for('GetUserDataByIdUseCase'),
   UserRouter: Symbol.for('UserRouter'),
+
+  CreditCardRepository: Symbol.for('CreditCardRepository'),
+  CreditCardService: Symbol.for('CreditCardService'),
+  CreateOwnCreditCardUseCase: Symbol.for('CreditCardUseCase'),
+  GetAllCreditCards: Symbol.for('GetAllCreditCards'),
+  GetUserCreditCards: Symbol.for('GetUserCreditCards'),
+  CheckCreditCardBalance: Symbol.for('CheckCreditCardBalance'),
+  CreditCardRouter: Symbol.for('CreditCardRouter'),
 };

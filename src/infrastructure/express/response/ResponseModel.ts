@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { HttpStatusCode } from '../../../domain/enums/HttpStatusCode';
 import { Message } from '../../../domain/enums/Message';
 import { BaseException } from '../../../domain/exceptions/BaseException';
+import { ValidationError } from 'class-validator';
 
 export class ResponseModel {
   static async manageResponse(
@@ -30,6 +31,13 @@ export class ResponseModel {
     if (error instanceof BaseException) {
       errorResponse.message = error.message as Message;
       return res.status(error.statusCode).json({ ...errorResponse });
+    }
+
+    if (error instanceof ValidationError) {
+      errorResponse.message = Object.values(
+        error.constraints || {}
+      )[0] as Message;
+      return res.status(HttpStatusCode.BAD_REQUEST).json({ ...errorResponse });
     }
 
     return res

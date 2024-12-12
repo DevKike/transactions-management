@@ -1,10 +1,7 @@
 import { IsEmail, IsString, Length, MinLength } from 'class-validator';
+import { IAuthCredentials } from '../../../domain/interfaces/user/IUser';
 
-export class UserDTO {
-  @IsString()
-  @Length(10, 30)
-  name: string;
-
+export class UserLoginDTO implements IAuthCredentials {
   @IsEmail()
   email: string;
 
