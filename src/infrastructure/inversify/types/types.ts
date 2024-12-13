@@ -1,4 +1,4 @@
-export const TYPES = {
+export const  TYPES = {
   DataSource: Symbol.for('DataSource'),
 
   Application: Symbol.for('Application'),
@@ -21,4 +21,8 @@ export const TYPES = {
   GetUserCreditCards: Symbol.for('GetUserCreditCards'),
   CheckCreditCardBalance: Symbol.for('CheckCreditCardBalance'),
   CreditCardRouter: Symbol.for('CreditCardRouter'),
+
+  TransactionRepository: Symbol.for('TransactionRepository'),
+  TransactionService: Symbol.for('TransactionService'),
+  PayCreditCardUseCase: Symbol.for('PayCreditCardUseCase'),
 };

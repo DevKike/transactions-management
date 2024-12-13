@@ -30,6 +30,10 @@ import { IGetAllCreditCards } from '../../../domain/interfaces/creditCard/usecas
 import { GetAllCreditCards } from '../../../application/usecases/creditCard/GetAllCreditCards';
 import { IGetUserCreditCards } from '../../../domain/interfaces/creditCard/usecases/IGetUserCreditCards';
 import { GetUserCreditCards } from '../../../application/usecases/creditCard/GetUserCreditCards';
+import { ITransactionRepository } from '../../../domain/interfaces/transaction/ITransactionRepository';
+import { TransactionRepository } from '../../repositories/transaction/TransactionRepository';
+import { ITransactionService } from '../../../domain/interfaces/transaction/ITransactionService';
+import { TransactionService } from '../../services/transaction/TransactionService';
 
 const container = new Container();
 
@@ -96,4 +100,11 @@ container
     return new CheckCreditCardBalance(creditCardService);
   });
 container.bind<IRouterModule>(TYPES.CreditCardRouter).to(CreditCardRouter);
+
+container
+  .bind<ITransactionRepository>(TYPES.TransactionRepository)
+  .to(TransactionRepository);
+container
+  .bind<ITransactionService>(TYPES.TransactionService)
+  .to(TransactionService);
 export { container };

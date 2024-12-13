@@ -8,3 +8,6 @@ export interface ITransaction {
   transactionDate: Date;
   creditCard: ICreditCard;
 }
+
+export interface ICreateTransaction
+  extends Omit<ITransaction, 'id' | 'transactionDate'> {}
