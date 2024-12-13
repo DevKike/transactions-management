@@ -11,4 +11,4 @@ export interface ICreditCard {
 }
 
 export interface ICreateCreditCard
-  extends Omit<ICreditCard, 'id' | 'balance' | 'user'> {}
+  extends Omit<ICreditCard, 'id' | 'balance' | 'user' | 'transactions'> {}
