@@ -1,7 +1,7 @@
 import { IUser } from '../../user/IUser';
 import { ICreditCard } from '../ICreditCard';
 
-export interface ICheckCreditCardBalance {
+export interface ICheckCreditCardBalanceUseCase {
   execute(
     creditCardId: ICreditCard['id'],
     userId: IUser['id']

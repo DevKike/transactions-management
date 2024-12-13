@@ -3,9 +3,9 @@ import {
   ICreditCard,
 } from '../../../domain/interfaces/creditCard/ICreditCard';
 import { ICreditCardService } from '../../../domain/interfaces/creditCard/ICreditCardService';
-import { ICreateOwnCreditCard } from '../../../domain/interfaces/creditCard/usecases/ICreateOwnCreditCard';
+import { ICreateOwnCreditCardUseCase } from '../../../domain/interfaces/creditCard/usecases/ICreateOwnCreditCardUseCase';
 
-export class CreateOwnCreditCard implements ICreateOwnCreditCard {
+export class CreateOwnCreditCard implements ICreateOwnCreditCardUseCase {
   constructor(private readonly _creditCardService: ICreditCardService) {}
 
   async execute(creditCard: ICreateCreditCard): Promise<ICreditCard> {

@@ -1,5 +1,5 @@
 import { ICreditCard } from '../ICreditCard';
 
-export interface IGetAllCreditCards {
+export interface IGetAllCreditCardsUseCase {
   execute(): Promise<ICreditCard[]>;
 }

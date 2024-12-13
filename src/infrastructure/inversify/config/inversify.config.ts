@@ -19,17 +19,17 @@ import { ICreditCardRepository } from '../../../domain/interfaces/creditCard/ICr
 import { CreditCardRepository } from '../../repositories/creditCard/CreditCardRepository';
 import { ICreditCardService } from '../../../domain/interfaces/creditCard/ICreditCardService';
 import { CreditCardService } from '../../services/creditCard/CreditCardService';
-import { ICreateOwnCreditCard } from '../../../domain/interfaces/creditCard/usecases/ICreateOwnCreditCard';
+import { ICreateOwnCreditCardUseCase } from '../../../domain/interfaces/creditCard/usecases/ICreateOwnCreditCardUseCase';
 import { ILoginUseCase } from '../../../domain/interfaces/user/usecases/ILoginUseCase';
 import { IGetUserDataByIdUseCase } from '../../../domain/interfaces/user/usecases/IGetUserDataByIdUseCase';
-import { CreateOwnCreditCard } from '../../../application/usecases/creditCard/CreateOwnCreditCard';
+import { CreateOwnCreditCard } from '../../../application/usecases/creditCard/CreateOwnCreditCardUseCase';
 import { CreditCardRouter } from '../../express/driving/creditCard/CreditCardRouter';
-import { ICheckCreditCardBalance } from '../../../domain/interfaces/creditCard/usecases/ICheckCreditCardBalance';
-import { CheckCreditCardBalance } from '../../../application/usecases/creditCard/CheckCreditCardBalance';
-import { IGetAllCreditCards } from '../../../domain/interfaces/creditCard/usecases/IGetAllCreditCards';
-import { GetAllCreditCards } from '../../../application/usecases/creditCard/GetAllCreditCards';
-import { IGetUserCreditCards } from '../../../domain/interfaces/creditCard/usecases/IGetUserCreditCards';
-import { GetUserCreditCards } from '../../../application/usecases/creditCard/GetUserCreditCards';
+import { ICheckCreditCardBalanceUseCase } from '../../../domain/interfaces/creditCard/usecases/ICheckCreditCardBalanceUseCase';
+import { CheckCreditCardBalanceUseCase } from '../../../application/usecases/creditCard/CheckCreditCardBalanceUseCase';
+import { IGetAllCreditCardsUseCase } from '../../../domain/interfaces/creditCard/usecases/IGetAllCreditCardsUseCase';
+import { GetAllCreditCardsUseCase } from '../../../application/usecases/creditCard/GetAllCreditCardsUseCase';
+import { IGetUserCreditCardsUseCase } from '../../../domain/interfaces/creditCard/usecases/IGetUserCreditCardsUseCase';
+import { GetUserCreditCardsUseCase } from '../../../application/usecases/creditCard/GetUserCreditCardsUseCase';
 import { ITransactionRepository } from '../../../domain/interfaces/transaction/ITransactionRepository';
 import { TransactionRepository } from '../../repositories/transaction/TransactionRepository';
 import { ITransactionService } from '../../../domain/interfaces/transaction/ITransactionService';
@@ -68,7 +68,7 @@ container
   .bind<ICreditCardService>(TYPES.CreditCardService)
   .to(CreditCardService);
 container
-  .bind<ICreateOwnCreditCard>(TYPES.CreateOwnCreditCardUseCase)
+  .bind<ICreateOwnCreditCardUseCase>(TYPES.CreateOwnCreditCardUseCase)
   .toDynamicValue((context) => {
     const creditCardService = context.container.get<ICreditCardService>(
       TYPES.CreditCardService
@@ -76,28 +76,28 @@ container
     return new CreateOwnCreditCard(creditCardService);
   });
 container
-  .bind<IGetAllCreditCards>(TYPES.GetAllCreditCards)
+  .bind<IGetAllCreditCardsUseCase>(TYPES.GetAllCreditCardsUseCase)
   .toDynamicValue((context) => {
     const creditCardService = context.container.get<ICreditCardService>(
       TYPES.CreditCardService
     );
-    return new GetAllCreditCards(creditCardService);
+    return new GetAllCreditCardsUseCase(creditCardService);
   });
 container
-  .bind<IGetUserCreditCards>(TYPES.GetUserCreditCards)
+  .bind<IGetUserCreditCardsUseCase>(TYPES.GetUserCreditCardsUseCase)
   .toDynamicValue((context) => {
     const creditCardService = context.container.get<ICreditCardService>(
       TYPES.CreditCardService
     );
-    return new GetUserCreditCards(creditCardService);
+    return new GetUserCreditCardsUseCase(creditCardService);
   });
 container
-  .bind<ICheckCreditCardBalance>(TYPES.CheckCreditCardBalance)
+  .bind<ICheckCreditCardBalanceUseCase>(TYPES.CheckCreditCardBalanceUseCase)
   .toDynamicValue((context) => {
     const creditCardService = context.container.get<ICreditCardService>(
       TYPES.CreditCardService
     );
-    return new CheckCreditCardBalance(creditCardService);
+    return new CheckCreditCardBalanceUseCase(creditCardService);
   });
 container.bind<IRouterModule>(TYPES.CreditCardRouter).to(CreditCardRouter);
 

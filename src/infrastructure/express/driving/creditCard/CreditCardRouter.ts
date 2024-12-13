@@ -2,16 +2,16 @@ import { Response, Router } from 'express';
 import { IRouterModule } from '../../interfaces/IRouterModule';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../inversify/types/types';
-import { ICreateOwnCreditCard } from '../../../../domain/interfaces/creditCard/usecases/ICreateOwnCreditCard';
+import { ICreateOwnCreditCardUseCase } from '../../../../domain/interfaces/creditCard/usecases/ICreateOwnCreditCardUseCase';
 import { ResponseModel } from '../../response/ResponseModel';
 import { HttpStatusCode } from '../../../../domain/enums/HttpStatusCode';
 import { Message } from '../../../../domain/enums/Message';
 import { IRequest } from '../../interfaces/IRequest';
 import { authMiddleware } from '../../middlewares/authMiddleware';
 import { classValidatorMiddleware } from '../../middlewares/classValidatorMiddleware';
-import { ICheckCreditCardBalance } from '../../../../domain/interfaces/creditCard/usecases/ICheckCreditCardBalance';
-import { IGetAllCreditCards } from '../../../../domain/interfaces/creditCard/usecases/IGetAllCreditCards';
-import { IGetUserCreditCards } from '../../../../domain/interfaces/creditCard/usecases/IGetUserCreditCards';
+import { ICheckCreditCardBalanceUseCase } from '../../../../domain/interfaces/creditCard/usecases/ICheckCreditCardBalanceUseCase';
+import { IGetAllCreditCardsUseCase } from '../../../../domain/interfaces/creditCard/usecases/IGetAllCreditCardsUseCase';
+import { IGetUserCreditCardsUseCase } from '../../../../domain/interfaces/creditCard/usecases/IGetUserCreditCardsUseCase';
 import { CreditCardRegisterDTO } from '../../../validator/creditCard/CreditCardDTO';
 
 @injectable()
@@ -20,13 +20,13 @@ export class CreditCardRouter implements IRouterModule {
 
   constructor(
     @inject(TYPES.CreateOwnCreditCardUseCase)
-    private readonly _createOwnCreditCardUseCase: ICreateOwnCreditCard,
-    @inject(TYPES.GetAllCreditCards)
-    private readonly _getAllCreditCards: IGetAllCreditCards,
-    @inject(TYPES.GetUserCreditCards)
-    private readonly _getUserCreditCards: IGetUserCreditCards,
-    @inject(TYPES.CheckCreditCardBalance)
-    private readonly _checkCreditCardBalance: ICheckCreditCardBalance
+    private readonly _createOwnCreditCardUseCase: ICreateOwnCreditCardUseCase,
+    @inject(TYPES.GetAllCreditCardsUseCase)
+    private readonly _getAllCreditCardsUseCase: IGetAllCreditCardsUseCase,
+    @inject(TYPES.GetUserCreditCardsUseCase)
+    private readonly _getUserCreditCardsUseCase: IGetUserCreditCardsUseCase,
+    @inject(TYPES.CheckCreditCardBalanceUseCase)
+    private readonly _checkCreditCardBalanceUseCase: ICheckCreditCardBalanceUseCase
   ) {
     this._creditCardRouter = Router();
     this.initRoutes();
@@ -50,7 +50,7 @@ export class CreditCardRouter implements IRouterModule {
 
     this._creditCardRouter.get('/all', async (req: IRequest, res: Response) => {
       await ResponseModel.manageResponse(
-        this._getAllCreditCards.execute(),
+        this._getAllCreditCardsUseCase.execute(),
         res
       );
     });
@@ -60,7 +60,7 @@ export class CreditCardRouter implements IRouterModule {
       authMiddleware(),
       async (req: IRequest, res: Response) => {
         await ResponseModel.manageResponse(
-          this._getUserCreditCards.execute(req.user!.id),
+          this._getUserCreditCardsUseCase.execute(req.user!.id),
           res
         );
       }
@@ -71,7 +71,7 @@ export class CreditCardRouter implements IRouterModule {
       authMiddleware(),
       async (req: IRequest, res: Response) => {
         await ResponseModel.manageResponse(
-          this._checkCreditCardBalance.execute(
+          this._checkCreditCardBalanceUseCase.execute(
             Number(req.params.id),
             req.user!.id
           ),

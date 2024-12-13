@@ -17,12 +17,11 @@ export const  TYPES = {
   CreditCardRepository: Symbol.for('CreditCardRepository'),
   CreditCardService: Symbol.for('CreditCardService'),
   CreateOwnCreditCardUseCase: Symbol.for('CreditCardUseCase'),
-  GetAllCreditCards: Symbol.for('GetAllCreditCards'),
-  GetUserCreditCards: Symbol.for('GetUserCreditCards'),
-  CheckCreditCardBalance: Symbol.for('CheckCreditCardBalance'),
+  GetAllCreditCardsUseCase: Symbol.for('GetAllCreditCards'),
+  GetUserCreditCardsUseCase: Symbol.for('GetUserCreditCards'),
+  CheckCreditCardBalanceUseCase: Symbol.for('CheckCreditCardBalance'),
   CreditCardRouter: Symbol.for('CreditCardRouter'),
 
   TransactionRepository: Symbol.for('TransactionRepository'),
   TransactionService: Symbol.for('TransactionService'),
-  PayCreditCardUseCase: Symbol.for('PayCreditCardUseCase'),
 };
