@@ -3,10 +3,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ICreditCard } from '../../../domain/interfaces/creditCard/ICreditCard';
 import { User } from './User';
+import { Transaction } from './Transaction';
 
 @Entity('credit_cards')
 export class CreditCard implements ICreditCard {
@@ -25,4 +27,7 @@ export class CreditCard implements ICreditCard {
   @ManyToOne(() => User, (user) => user.creditCards)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.creditCard)
+  transactions: Transaction[];
 }
